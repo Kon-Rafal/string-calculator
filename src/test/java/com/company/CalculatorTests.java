@@ -35,4 +35,9 @@ public class CalculatorTests {
     assertEquals(6, calculator.add("1,2,3"));
     assertEquals(10, calculator.add("1,2,3,4"));
   }
+
+  @Test
+  public void shouldReturnCalculateResultForNewLinesBetweenNumbers() {
+    assertEquals(6, calculator.add("1\n2,3"));
+  }
 }

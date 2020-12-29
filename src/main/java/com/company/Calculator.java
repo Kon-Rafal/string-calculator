@@ -1,5 +1,9 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 class Calculator {
   private static final String DEFAULT_SEPARATOR = ",";
 
@@ -8,10 +12,13 @@ class Calculator {
     if (numbers.isEmpty()) {
       return 0;
     } else if (numbers.contains(DEFAULT_SEPARATOR)) {
-      String[] arrayNumbers = numbers.split(DEFAULT_SEPARATOR);
-      return Integer.parseInt(arrayNumbers[0]) + Integer.parseInt(arrayNumbers[1]);
+      return fromStringToNumber(numbers).stream().reduce(0, Integer::sum);
     } else {
       return Integer.parseInt(numbers);
     }
    }
+
+  private List<Integer> fromStringToNumber(String numbers) {
+    return Arrays.stream(numbers.split(DEFAULT_SEPARATOR)).map(Integer::parseInt).collect(Collectors.toList());
+  }
 }

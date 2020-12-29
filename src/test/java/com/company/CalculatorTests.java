@@ -29,4 +29,10 @@ public class CalculatorTests {
   public void shouldReturnCalculateResultForTwoNumbersInString() {
     assertEquals(3, calculator.add("1,2"));
   }
+
+  @Test
+  public void shouldReturnCalculateResultForMultipleNumbersInString() {
+    assertEquals(6, calculator.add("1,2,3"));
+    assertEquals(10, calculator.add("1,2,3,4"));
+  }
 }

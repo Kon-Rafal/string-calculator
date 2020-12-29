@@ -18,7 +18,7 @@ class Calculator {
   private int adding(String numbers) {
     List<Integer> numbersList = fromStringToNumber(numbers);
     checkNegativeNumbersExistInString(numbersList);
-    return numbersList.stream().reduce(0, Integer::sum);
+    return numbersList.stream().filter(number -> number <=1000).reduce(0, Integer::sum);
   }
 
   private void checkNegativeNumbersExistInString(List<Integer> numbersList) {

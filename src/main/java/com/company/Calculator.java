@@ -41,17 +41,16 @@ class Calculator {
       }
     }
     inputString = inputString.replaceAll("S", "|");
-    return inputString;
+    return inputString + "|\n";
   }
 
   private List<Integer> fromStringToNumber(String numbers) {
     if (numbers.startsWith("//")) {
       String[] result = numbers.split("\n", 1);
       String customDelimiter = createCustomDelimiters(result[0].substring(2, numbers.indexOf("\n")));
-      String delimiters = customDelimiter + "|(\n)";
 
       numbers = numbers.substring(numbers.indexOf("\n")+1);
-      return Arrays.stream(numbers.split(delimiters)).map(Integer::parseInt).collect(Collectors.toList());
+      return Arrays.stream(numbers.split(customDelimiter)).map(Integer::parseInt).collect(Collectors.toList());
     }
     String defaultSeparator = "[,\n]";
     return Arrays.stream(numbers.split(defaultSeparator)).map(Integer::parseInt).collect(Collectors.toList());

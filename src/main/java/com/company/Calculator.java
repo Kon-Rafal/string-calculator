@@ -28,24 +28,29 @@ class Calculator {
       throw new NegativeNumbersException("negatives not allowed: " + negativeNumbers.toString());
   }
 
-  private String escapeMetaCharacters(String inputString){
+  private String createCustomDelimiters(String inputString){
     final String[] metaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%"};
+
+    inputString = inputString.replaceAll("]\\[", "S");
+    inputString = inputString.replaceAll("\\[", "");
+    inputString = inputString.replaceAll("]", "");
 
     for (String metaCharacter : metaCharacters) {
       if (inputString.contains(metaCharacter)) {
         inputString = inputString.replace(metaCharacter, "\\" + metaCharacter);
       }
     }
+    inputString = inputString.replaceAll("S", "|");
     return inputString;
   }
 
   private List<Integer> fromStringToNumber(String numbers) {
     if (numbers.startsWith("//")) {
-      String[] result = numbers.split("\n", 2);
-      String customDelimiter = escapeMetaCharacters(result[0].substring(2, numbers.indexOf("\n")));
-      String delimiters = "(" + customDelimiter + ")|(\n)";
+      String[] result = numbers.split("\n", 1);
+      String customDelimiter = createCustomDelimiters(result[0].substring(2, numbers.indexOf("\n")));
+      String delimiters = customDelimiter + "|(\n)";
 
-      numbers = numbers.substring(2).replaceAll(customDelimiter + "\n", "");
+      numbers = numbers.substring(numbers.indexOf("\n")+1);
       return Arrays.stream(numbers.split(delimiters)).map(Integer::parseInt).collect(Collectors.toList());
     }
     String defaultSeparator = "[,\n]";

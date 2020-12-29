@@ -3,7 +3,9 @@ package com.company;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class CalculatorTests {
 
@@ -13,6 +15,9 @@ public class CalculatorTests {
   public void before() {
     calculator = new Calculator();
   }
+
+  @Rule
+  public ExpectedException exceptionRule = ExpectedException.none();
 
   @Test
   public void shouldReturnZeroForEmptyString() {
@@ -45,5 +50,12 @@ public class CalculatorTests {
   public void shouldReturnCalculateResultForChangeDelimiters() {
     assertEquals(3, calculator.add("//;\n1;2"));
     assertEquals(6, calculator.add("//;-\n1;-2;-3"));
+  }
+
+  @Test
+  public void shouldThrowExceptionForStringWithNegativeNumbers() {
+    exceptionRule.expect(NegativeNumbersException.class);
+    exceptionRule.expectMessage("negatives not allowed: [-1, -2]");
+    calculator.add("-1,-2");
   }
 }

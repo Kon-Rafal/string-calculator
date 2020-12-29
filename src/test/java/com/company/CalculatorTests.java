@@ -50,6 +50,7 @@ public class CalculatorTests {
   public void shouldReturnCalculateResultForChangeDelimiters() {
     assertEquals(3, calculator.add("//;\n1;2"));
     assertEquals(6, calculator.add("//;-\n1;-2;-3"));
+    assertEquals(6, calculator.add("// *** \n1 *** 2 *** 3"));
   }
 
   @Test
